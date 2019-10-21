@@ -14,6 +14,8 @@ build_master:
   only:
     - master
   script:
+    - echo "${CDN_PROPERTIES}" > src/main/resources/cdn.properties
+    - echo "${TOKEN_PROPERTIES}" > src/main/resources/token.properties
     - docker build -t ${REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_NAME} .
     - echo "${REGISTRY_ACCOUNT}" >> secret.json
     - docker login -u _json_key -p "`cat secret.json`" https://gcr.io
