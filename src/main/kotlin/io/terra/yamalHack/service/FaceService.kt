@@ -11,7 +11,7 @@ class FaceService(
         @Autowired val faceApi: FaceApi
 ) {
 
-    fun detectFace(imageUrl: String): DetectFaceApiResponse {
+    fun detectFace(imageUrl: String): List<DetectFaceApiResponse> {
         return faceApi.detectFace(Image(imageUrl))
     }
 }

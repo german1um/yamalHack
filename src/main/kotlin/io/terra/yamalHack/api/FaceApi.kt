@@ -37,13 +37,13 @@ class FaceApi (
     }
 
 
-    fun detectFace(image: Image): DetectFaceApiResponse {
+    fun detectFace(image: Image): List<DetectFaceApiResponse> {
         val response = api.detectFace(
                 subscriptionKey = token,
                 imageUrl = image
         ).execute()
 
-        return response.body()!!.first()
+        return response.body()!!
     }
 
 }

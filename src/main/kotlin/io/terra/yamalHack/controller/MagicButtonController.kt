@@ -18,7 +18,7 @@ class MagicButtonController (
     fun submitDickPic(
             @RequestParam("dickPick")
             picture: String
-    ): DetectFaceApiResponse {
+    ): List<DetectFaceApiResponse> {
         return faceService.detectFace(picture)
     }
 }
