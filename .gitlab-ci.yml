@@ -1,0 +1,33 @@
+stages:
+  - build
+
+variables:
+  REGISTRY: gcr.io/mimetic-surfer-241512
+  IMAGE_NAME: yamal
+
+services:
+  - docker:dind
+
+build_master:
+  image: docker:stable
+  stage: build
+  only:
+    - master
+  script:
+    - docker build -t ${REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_NAME} .
+    - echo "${REGISTRY_ACCOUNT}" >> secret.json
+    - docker login -u _json_key -p "`cat secret.json`" https://gcr.io
+    - docker push ${REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_NAME}
+
+build_develop:
+  image: docker:stable
+  stage: build
+  only:
+    - /develop/
+  script:
+    - mv src/main/resources/application-dev.properties src/main/resources/application-prod.properties
+    - docker build -t ${REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_NAME} .
+    - echo "${REGISTRY_ACCOUNT}" >> secret.json
+    - docker login -u _json_key -p "`cat secret.json`" https://gcr.io
+    - docker push ${REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_NAME}
+
