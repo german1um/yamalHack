@@ -1,11 +1,15 @@
 package io.terra.yamalHack.api
 
+import io.terra.yamalHack.api.entity.DetectFaceApiResponse
+import io.terra.yamalHack.model.Image
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.PropertySource
 import org.springframework.context.annotation.PropertySources
 import org.springframework.core.env.Environment
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
+import org.springframework.web.server.ResponseStatusException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -30,6 +34,16 @@ class FaceApi (
 
     init {
         api = retrofit.create(FaceApiService::class.java)
+    }
+
+
+    fun detectFace(image: Image): DetectFaceApiResponse {
+        val response = api.detectFace(
+                subscriptionKey = token,
+                imageUrl = image
+        ).execute()
+
+        return response.body()!!
     }
 
 }

@@ -1,5 +1,8 @@
 package io.terra.yamalHack.controller
 
+import io.terra.yamalHack.api.entity.DetectFaceApiResponse
+import io.terra.yamalHack.service.FaceService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -7,13 +10,15 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/button")
-class MagicButtonController {
+class MagicButtonController (
+        @Autowired val faceService: FaceService
+){
 
     @GetMapping
     fun submitDickPic(
             @RequestParam("dickPick")
             picture: String
-    ): String {
-        return "Hello"
+    ): DetectFaceApiResponse {
+        return faceService.detectFace(picture)
     }
 }
