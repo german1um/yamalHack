@@ -5,6 +5,8 @@ build/
 !**/src/main/**
 !**/src/test/**
 **/token.properties
+**/cdn.properties
+.gcs-credentials
 src/main/resources/token.properties
 ### STS ###
 .apt_generated
