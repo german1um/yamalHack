@@ -16,5 +16,5 @@ interface FaceApiService {
             @Query("returnFaceAttributes") faceAttributes: String = "emotion",
             @Body imageUrl: Image
 
-    ): Call<DetectFaceApiResponse>
+    ): Call<List<DetectFaceApiResponse>>
 }

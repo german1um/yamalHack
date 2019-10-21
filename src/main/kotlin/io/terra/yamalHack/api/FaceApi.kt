@@ -43,7 +43,7 @@ class FaceApi (
                 imageUrl = image
         ).execute()
 
-        return response.body()!!
+        return response.body()!!.first()
     }
 
 }
