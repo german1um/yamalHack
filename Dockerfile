@@ -6,6 +6,6 @@ RUN gradle bootJar
 
 FROM java:8
 
-COPY --from=stage /build/build/libs/yamalHack-0.0.1-SNAPSHOT.jar /app/init.jar`
+COPY --from=stage /build/build/libs/build-0.0.1-SNAPSHOT.jar /app/init.jar
 WORKDIR /app
 CMD ["java", "-jar", "init.jar"]
