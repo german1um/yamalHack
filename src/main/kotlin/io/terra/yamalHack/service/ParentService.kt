@@ -2,7 +2,6 @@ package io.terra.yamalHack.service
 
 import io.terra.yamalHack.dto.PersonDto
 import io.terra.yamalHack.model.Parent
-import io.terra.yamalHack.model.Person
 import io.terra.yamalHack.repository.ParentRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -45,7 +44,7 @@ class ParentService(
 
     fun addChildPhotos(token: String, childId: String, photoUrls: List<String>): String {
         val parent = login(token)
-        val childId = parent.childrenIds.firstOrNull { it == childId } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Child not found!")
+        parent.childrenIds.firstOrNull { it == childId } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Child not found!")
 
         photoUrls.forEach { url ->
             dataSetFaceService.addFaceToPerson(tmpGroupId, childId, url)
