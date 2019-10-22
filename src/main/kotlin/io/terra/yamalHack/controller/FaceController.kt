@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/faceRecognition")
-class MagicButtonController (
+@RequestMapping("/face")
+class FaceController (
         @Autowired val faceService: FaceService
 ){
 
-    @GetMapping
-    fun recognize(
+    @GetMapping("/detect")
+    fun detect(
             @RequestParam("imageUrl")
             picture: String
     ): List<DetectFaceApiResponse> {
