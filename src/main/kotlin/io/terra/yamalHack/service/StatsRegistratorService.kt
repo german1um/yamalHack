@@ -18,6 +18,18 @@ class StatsRegistratorService(
         @Autowired val actionStatsRepository: ActionStatsRepository
 ) {
 
+    fun loadActionStats(childId: String): List<ActionStats> {
+        return actionStatsRepository.findByChildId(childId)
+    }
+
+    fun loadFriendsStats(): List<FriendsStats> {
+        return friendsStatsRepository.findAll()
+    }
+
+    fun loadEmotionsForChild(childId: String): List<EmotionStats> {
+        return emotionStatsRepository.findByChildId(childId)
+    }
+
     fun register(detections: List<DetectFaceApiResponse>, identifications: List<IdentifyFaceApiResponse>) {
         registerFriendsStats(identifications)
 

@@ -10,3 +10,17 @@ data class Emotion (
         val sadness: Double,
         val surprise: Double
 )
+
+fun List<Emotion>.average(): Emotion {
+    val size = this.size
+    return Emotion(
+            this.sumByDouble { it.anger }/size,
+            this.sumByDouble { it.contempt }/size,
+            this.sumByDouble { it.disgust }/size,
+            this.sumByDouble { it.fear }/size,
+            this.sumByDouble { it.happiness }/size,
+            this.sumByDouble { it.neutral }/size,
+            this.sumByDouble { it.sadness }/size,
+            this.sumByDouble { it.surprise }/size
+    )
+}

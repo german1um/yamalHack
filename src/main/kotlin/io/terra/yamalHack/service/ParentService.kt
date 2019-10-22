@@ -1,5 +1,6 @@
 package io.terra.yamalHack.service
 
+import io.terra.yamalHack.api.entity.average
 import io.terra.yamalHack.dto.ChildStatsDto
 import io.terra.yamalHack.dto.PersonDto
 import io.terra.yamalHack.model.Parent
@@ -12,7 +13,9 @@ import org.springframework.web.server.ResponseStatusException
 @Service
 class ParentService(
         @Autowired val parentRepository: ParentRepository,
-        @Autowired val dataSetFaceService: DataSetFaceService
+        @Autowired val dataSetFaceService: DataSetFaceService,
+        @Autowired val personGroupService: PersonGroupService,
+        @Autowired val statsRegistratorService: StatsRegistratorService
 ) {
 
     fun login(token: String): Parent {
@@ -61,7 +64,26 @@ class ParentService(
     }
 
     fun childStats(token: String, childId: String): ChildStatsDto {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val child = personGroupService.loadOrThrow(tmpGroupId).persons.first { it.id == childId }
+
+        val emotions = statsRegistratorService.loadEmotionsForChild(child.id)
+                .map { it.emotions }
+                .average()
+        /*val friendsStats = statsRegistratorService.loadFriendsStats().map { it.children.contains(childId) }
+        val actionStats = statsRegistratorService.loadActionStats(childId)*/
+
+        return ChildStatsDto(
+                "",
+                child.name,
+                "Первый отряд",
+                actionDuration = 100,
+                energy = 100,
+                distance = 100,
+                rating = 100,
+                actionTimetable = emptyList(),
+                emotions = emotions,
+                bestFriends = emptyList()
+        )
     }
 
     companion object {
