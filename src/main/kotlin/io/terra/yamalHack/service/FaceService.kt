@@ -39,7 +39,7 @@ class FaceService(
     }
 
     private fun saveImage(image: MultipartFile): String {
-        val file = File("src/main/resources/images/${UUID.randomUUID().toString()}.jpg")
+        val file = File("${UUID.randomUUID().toString()}.jpg")
         file.createNewFile()
         file.writeBytes(image.bytes)
         return file.absolutePath
