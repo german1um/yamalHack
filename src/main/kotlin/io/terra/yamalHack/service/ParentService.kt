@@ -5,6 +5,7 @@ import io.terra.yamalHack.api.entity.average
 import io.terra.yamalHack.cdn.GcsResolver
 import io.terra.yamalHack.dto.ChildStatsDto
 import io.terra.yamalHack.dto.PersonDto
+import io.terra.yamalHack.model.ChildDto
 import io.terra.yamalHack.model.Parent
 import io.terra.yamalHack.repository.ParentRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -52,7 +53,7 @@ class ParentService(
                         id = parent.id,
                         token = parent.token,
                         name = parent.name,
-                        childrenIds = parent.childrenIds + childId
+                        children = parent.children + ChildDto(childId, 0)
                 )
         )
 
@@ -61,7 +62,7 @@ class ParentService(
 
     fun addChildPhotos(token: String, childId: String, photoUrls: List<String>): String {
         val parent = login(token)
-        parent.childrenIds.firstOrNull { it == childId } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Child not found!")
+        parent.children.firstOrNull { it.id == childId } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Child not found!")
 
         photoUrls.forEach { url ->
             dataSetFaceService.addFaceToPerson(tmpGroupId, childId, url)
@@ -91,9 +92,9 @@ class ParentService(
                 "",
                 child.name,
                 "Первый отряд",
-                actionDuration = 100,
-                energy = 100,
-                distance = 100,
+                actionDuration = 60*62*1332,
+                energy = 5327,
+                distance = 7566,
                 rating = 100,
                 actionTimetable = listOf(2,3,1),
                 emotions = emotions,
@@ -103,7 +104,7 @@ class ParentService(
 
     fun addChildPhoto(token: String, childId: String, file: MultipartFile): String {
         val parent = login(token)
-        parent.childrenIds.firstOrNull { it == childId } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Child not found!")
+        parent.children.firstOrNull { it.id == childId } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Child not found!")
 
 
         val links = gcsResolver.generateContentLinks(UUID.randomUUID().toString())
@@ -111,7 +112,28 @@ class ParentService(
 
         dataSetFaceService.addFaceToPerson(tmpGroupId, childId, links.downloadLink)
 
+        incrementChildPhotoCount(token, childId)
+
         return links.downloadLink
+    }
+
+    private fun incrementChildPhotoCount(token: String, childId: String) {
+        val parent = login(token)
+        val children = parent.children.toMutableList()
+        val oldCount = children.find { it.id == childId }?.photoCount ?: return
+        children.removeIf { it.id == childId }
+        val newChild = ChildDto(childId, oldCount + 1)
+        children.add(newChild)
+
+        parentRepository.save(
+                Parent(
+                        token = parent.token,
+                        name = parent.name,
+                        children = children,
+                        id = parent.id
+                )
+        )
+
     }
 
     companion object {

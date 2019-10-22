@@ -65,7 +65,7 @@ class StatsRegistratorService(
     }
 
     private fun registerChild(detect: DetectFaceApiResponse, identify: IdentifyFaceApiResponse) {
-        registerEmotionStats(detect)
+        registerEmotionStats(detect, identify.matcherCandidateId() ?: "")
         registerActionStats(detect, identify.matcherCandidateId() ?: "")
     }
 
@@ -84,11 +84,11 @@ class StatsRegistratorService(
         logger.info("Finish register best friends")
     }
 
-    private fun registerEmotionStats(detect: DetectFaceApiResponse) {
+    private fun registerEmotionStats(detect: DetectFaceApiResponse, childId: String) {
         emotionStatsRepository.save(
                 EmotionStats(
                         System.currentTimeMillis(),
-                        detect.faceId,
+                        childId,
                         detect.faceAttributes.emotion
                 )
         )

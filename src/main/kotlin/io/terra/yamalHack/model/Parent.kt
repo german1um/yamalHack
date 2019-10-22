@@ -7,6 +7,11 @@ import java.util.*
 data class Parent(
         val token: String,
         val name: String = "Gordon",
-        val childrenIds: List<String> = emptyList(),
+        val children: List<ChildDto> = emptyList(),
         val id: String = UUID.randomUUID().toString()
+)
+
+data class ChildDto(
+        val id: String,
+        val photoCount: Int
 )
