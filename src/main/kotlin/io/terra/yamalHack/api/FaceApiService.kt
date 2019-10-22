@@ -4,6 +4,8 @@ import io.terra.yamalHack.api.entity.DetectFaceApiResponse
 import io.terra.yamalHack.api.entity.IdentifyFaceApiResponse
 import io.terra.yamalHack.dto.IdentifyData
 import io.terra.yamalHack.model.Image
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -17,7 +19,16 @@ interface FaceApiService {
             @Query("returnFaceLandmarks") fceLandmarks: Boolean = true,
             @Query("returnFaceAttributes") faceAttributes: String = "emotion",
             @Body imageUrl: Image
+    ): Call<List<DetectFaceApiResponse>>
 
+    @POST("detect")
+    fun detectFace(
+            @Header("Content-Type") contentType: String = "application/octet-stream",
+            @Header("Ocp-Apim-Subscription-Key") subscriptionKey: String,
+            @Query("returnFaceId") faceId: Boolean = true,
+            @Query("returnFaceLandmarks") fceLandmarks: Boolean = true,
+            @Query("returnFaceAttributes") faceAttributes: String = "emotion",
+            @Body file: RequestBody
     ): Call<List<DetectFaceApiResponse>>
 
     @POST("identify")

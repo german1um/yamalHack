@@ -18,7 +18,9 @@ repositories {
 dependencies {
     compile 'com.google.cloud:google-cloud-storage:1.82.0'
     compile group: 'com.microsoft.azure.cognitiveservices', name: 'azure-faceapi', version: '0.0.1-beta'
-
+    compile group: 'org.bytedeco', name: 'javacv-platform', version: '1.5.1'
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+    compile group: 'com.squareup.okhttp', name: 'okhttp', version: '2.7.5'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-web'

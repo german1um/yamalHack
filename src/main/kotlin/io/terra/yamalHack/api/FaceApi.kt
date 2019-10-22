@@ -4,6 +4,9 @@ import io.terra.yamalHack.api.entity.DetectFaceApiResponse
 import io.terra.yamalHack.api.entity.IdentifyFaceApiResponse
 import io.terra.yamalHack.dto.IdentifyData
 import io.terra.yamalHack.model.Image
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.PropertySource
@@ -11,9 +14,12 @@ import org.springframework.context.annotation.PropertySources
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
+import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.server.ResponseStatusException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Multipart
+import java.io.File
 
 @Component
 @PropertySource("classpath:token.properties")
@@ -43,6 +49,19 @@ class FaceApi (
         val response = api.detectFace(
                 subscriptionKey = token,
                 imageUrl = image
+        ).execute()
+
+        return response.body()!!
+    }
+
+    fun detectFace(file: MultipartFile): List<DetectFaceApiResponse> {
+
+        val requestFile = RequestBody.create(
+                MediaType.parse("application/octet-stream"),
+                file.bytes)
+        val response = api.detectFace(
+                subscriptionKey = token,
+                file = requestFile
         ).execute()
 
         return response.body()!!
