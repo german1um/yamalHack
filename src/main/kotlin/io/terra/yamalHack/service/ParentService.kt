@@ -79,7 +79,7 @@ class ParentService(
     }
 
     fun childStats(token: String, childId: String): ChildStatsDto {
-        val child = personGroupService.loadOrThrow(tmpGroupId).persons.first { it.id == childId }
+        val child = personGroupService.loadOrThrow(tmpGroupId).persons.firstOrNull { it.id == childId } ?: return ChildStatsDto.fuckYura()
 
         val emotions = statsRegistratorService.loadEmotionsForChild(child.id)
                 .map { it.emotions }
@@ -118,3 +118,4 @@ class ParentService(
         const val tmpGroupId = "58fe9b26-7a45-48cc-9631-c5ab4a494b22"
     }
 }
+
