@@ -1,5 +1,6 @@
 package io.terra.yamalHack.controller
 
+import io.terra.yamalHack.dto.ChildStatsDto
 import io.terra.yamalHack.model.Parent
 import io.terra.yamalHack.model.Person
 import io.terra.yamalHack.service.ParentService
@@ -34,6 +35,14 @@ class ParentController(
             @RequestParam("photoUrls") photoUrls: List<String>
     ): String {
         return parentService.addChildPhotos(token, childId, photoUrls)
+    }
+
+    @GetMapping("/{parentToken}/childStats")
+    fun childStats(
+            @PathVariable("parentToken") token: String,
+            @RequestParam("childId") childId: String
+    ): ChildStatsDto {
+        return parentService.childStats(token, childId)
     }
 
 }

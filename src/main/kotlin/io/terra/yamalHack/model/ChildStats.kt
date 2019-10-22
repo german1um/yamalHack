@@ -12,12 +12,14 @@ data class FriendsStats(
 @Document
 data class EmotionStats(
         val timestamp: Long,
+        val childId: String,
         val emotions: Emotion
 )
 
 @Document
 data class ActionStats(
         val timestamp: Long,
+        val childId: String,
         val cameraId: String,
         val x: Int,
         val y: Int

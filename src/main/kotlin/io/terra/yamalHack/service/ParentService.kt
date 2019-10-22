@@ -1,5 +1,6 @@
 package io.terra.yamalHack.service
 
+import io.terra.yamalHack.dto.ChildStatsDto
 import io.terra.yamalHack.dto.PersonDto
 import io.terra.yamalHack.model.Parent
 import io.terra.yamalHack.repository.ParentRepository
@@ -59,5 +60,9 @@ class ParentService(
 
     fun save(parent: Parent) {
         parentRepository.save(parent)
+    }
+
+    fun childStats(token: String, childId: String): ChildStatsDto {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
