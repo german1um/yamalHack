@@ -33,5 +33,15 @@ data class BestFriends(
         val photoUrl: String,
         val name: String,
         val timeTogether: Long
-)
+) {
+    companion object {
+        fun getTestFriends(seed: Int): BestFriends {
+            return BestFriends(
+                    "https://api.terra-incognita.tk/static/901977d5-0afe-4c21-95c9-e30d93be5d7d",
+                    "Юрец",
+                    seed*1000L
+            )
+        }
+    }
+}
 

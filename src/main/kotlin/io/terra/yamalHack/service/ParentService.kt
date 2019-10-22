@@ -3,6 +3,7 @@ package io.terra.yamalHack.service
 import io.terra.yamalHack.cdn.GcsUploader
 import io.terra.yamalHack.api.entity.average
 import io.terra.yamalHack.cdn.GcsResolver
+import io.terra.yamalHack.dto.BestFriends
 import io.terra.yamalHack.dto.ChildStatsDto
 import io.terra.yamalHack.dto.PersonDto
 import io.terra.yamalHack.model.ChildDto
@@ -85,7 +86,8 @@ class ParentService(
         val emotions = statsRegistratorService.loadEmotionsForChild(child.id)
                 .map { it.emotions }
                 .average()
-        val friendsStats = statsRegistratorService.loadFriendsStats().map { it.children.contains(childId) }
+
+        val friends = listOf(BestFriends.getTestFriends(100), BestFriends.getTestFriends(43), BestFriends.getTestFriends(766))
         /*val actionStats = statsRegistratorService.loadActionStats(childId)*/
 
         return ChildStatsDto(
@@ -98,7 +100,7 @@ class ParentService(
                 rating = 100,
                 actionTimetable = listOf(2,3,1),
                 emotions = emotions,
-                bestFriends = emptyList()
+                bestFriends = friends
         )
     }
 
