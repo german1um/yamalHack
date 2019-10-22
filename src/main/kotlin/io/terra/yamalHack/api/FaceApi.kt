@@ -73,6 +73,9 @@ class FaceApi (
                 identifyData = data
         ).execute()
 
-        return response.body()!!
+        if(response.body() == null) {
+            logger.info(response.message())
+        }
+        return response.body()?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, response.message())
     }
 }
