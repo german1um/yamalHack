@@ -85,8 +85,8 @@ class ParentService(
         val emotions = statsRegistratorService.loadEmotionsForChild(child.id)
                 .map { it.emotions }
                 .average()
-        /*val friendsStats = statsRegistratorService.loadFriendsStats().map { it.children.contains(childId) }
-        val actionStats = statsRegistratorService.loadActionStats(childId)*/
+        //val friendsStats = statsRegistratorService.loadFriendsStats().map { it.children.contains(childId) }
+        /*val actionStats = statsRegistratorService.loadActionStats(childId)*/
 
         return ChildStatsDto(
                 "",
@@ -137,7 +137,8 @@ class ParentService(
     }
 
     companion object {
-        const val tmpGroupId = "58fe9b26-7a45-48cc-9631-c5ab4a494b22"
+        //const val tmpGroupId = "58fe9b26-7a45-48cc-9631-c5ab4a494b22"
+        const val tmpGroupId = "a7e0a56a-e94f-4c4a-87ba-cf89f6fb60f1"
     }
 }
 

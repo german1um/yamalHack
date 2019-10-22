@@ -20,6 +20,8 @@ data class Emotion (
 }
 
 fun List<Emotion>.average(): Emotion {
+    if (this.isEmpty()) return Emotion.fuckYura()
+
     val size = this.size
     return Emotion(
             this.sumByDouble { it.anger }/size,
