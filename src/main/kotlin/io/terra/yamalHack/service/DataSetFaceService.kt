@@ -30,7 +30,7 @@ class DataSetFaceService (
         return groupId
     }
 
-    fun createPersonInGroup(groupId: String, personDto: PersonDto): String {
+    fun addPersonToGroup(groupId: String, personDto: PersonDto): String {
         val personId = dataSetFaceApi.createPersonInGroup(groupId, personDto)
 
         personGroupService.addPersonToGroup(
