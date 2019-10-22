@@ -16,7 +16,7 @@ class FaceController (
 
     @PostMapping("/cameraPic")
     fun cameraPic(
-            @RequestParam("pic")
+            @RequestBody
             file: MultipartFile
     ) {
         faceService.processCameraPic(file)
