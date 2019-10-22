@@ -24,18 +24,27 @@ class ParentService(
         @Autowired val gcsUploader: GcsUploader
 ) {
 
+    val names = listOf("Gordon Friman", "Andrew Dorofeev", "Maks Kacal", "Ded Moroz", "Petr")
+
     fun login(token: String): Parent {
-        return if (isExist(token)) {
+        /*if (isExist(token)) {
             parentRepository.findByToken(token).get()
         } else {
             val newParent = Parent(token)
             save(newParent)
-            newParent
+        }*/
+
+        if (!isExist(token)) {
+            val newParent = Parent(token)
+            save(newParent)
+            addChild(token, names.shuffled().first())
         }
+
+        return parentRepository.findByToken(token).get()
     }
 
     fun addChild(token: String, childName: String): Parent {
-        val parent = login(token)
+        val parent = parentRepository.findByToken(token).get()
         val childId = dataSetFaceService.addPersonToGroup(tmpGroupId, PersonDto(childName))
 
         parentRepository.save(
