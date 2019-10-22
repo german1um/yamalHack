@@ -3,8 +3,8 @@ package io.terra.yamalHack.api
 import io.terra.yamalHack.api.entity.AddFaceResponse
 import io.terra.yamalHack.api.entity.CreatePersonResponse
 import io.terra.yamalHack.model.Image
-import io.terra.yamalHack.model.Person
-import io.terra.yamalHack.model.PersonGroup
+import io.terra.yamalHack.dto.PersonDto
+import io.terra.yamalHack.dto.PersonGroupDto
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -15,7 +15,7 @@ interface DataSetFaceApiService {
             @Header("Content-Type") contentType: String = "application/json",
             @Header("Ocp-Apim-Subscription-Key") subscriptionKey: String,
             @Path("personGroupId") personGroupId: String,
-            @Body personGroup: PersonGroup
+            @Body personGroupDto: PersonGroupDto
     ): Call<Void>
 
     @POST("persongroups/{personGroupId}/persons")
@@ -23,7 +23,7 @@ interface DataSetFaceApiService {
             @Header("Content-Type") contentType: String = "application/json",
             @Header("Ocp-Apim-Subscription-Key") subscriptionKey: String,
             @Path("personGroupId") personGroupId: String,
-            @Body person: Person
+            @Body personDto: PersonDto
     ): Call<CreatePersonResponse>
 
     @POST("persongroups/{personGroupId}/persons/{personId}/persistedFaces")

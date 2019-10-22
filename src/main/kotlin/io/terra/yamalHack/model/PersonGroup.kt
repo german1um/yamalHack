@@ -1,7 +1,11 @@
 package io.terra.yamalHack.model
 
+import org.springframework.data.annotation.Id
+
 data class PersonGroup(
+        @Id
+        val id: String,
         val name: String,
         val userData: String,
-        val recognitionModel: String = "recognition_02"
+        val persons: List<Person>
 )
