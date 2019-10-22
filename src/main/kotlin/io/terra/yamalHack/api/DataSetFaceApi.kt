@@ -1,9 +1,8 @@
 package io.terra.yamalHack.api
 
 import io.terra.yamalHack.model.Image
-import io.terra.yamalHack.model.Person
-import io.terra.yamalHack.model.PersonGroup
-import org.bson.types.ObjectId
+import io.terra.yamalHack.dto.PersonDto
+import io.terra.yamalHack.dto.PersonGroupDto
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.PropertySource
@@ -36,23 +35,23 @@ class DataSetFaceApi(
         api = retrofit.create(DataSetFaceApiService::class.java)
     }
 
-    fun createPersonGroup(personGroup: PersonGroup): String {
+    fun createPersonGroup(personGroupDto: PersonGroupDto): String {
         val groupId = UUID.randomUUID().toString()
 
         val response = api.createPersonGroup(
                 subscriptionKey = token,
                 personGroupId = groupId,
-                personGroup = personGroup
+                personGroupDto = personGroupDto
         ).execute()
 
         return groupId
     }
 
-    fun createPersonInGroup(groupId: String, person: Person): String {
+    fun createPersonInGroup(groupId: String, personDto: PersonDto): String {
         val response = api.createPersonInGroup(
                 subscriptionKey = token,
                 personGroupId = groupId,
-                person = person
+                personDto = personDto
         ).execute()
 
         return response.body()?.personId ?: ""

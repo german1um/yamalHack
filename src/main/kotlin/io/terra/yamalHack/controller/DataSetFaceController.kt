@@ -1,7 +1,7 @@
 package io.terra.yamalHack.controller
 
-import io.terra.yamalHack.model.Person
-import io.terra.yamalHack.model.PersonGroup
+import io.terra.yamalHack.dto.PersonDto
+import io.terra.yamalHack.dto.PersonGroupDto
 import io.terra.yamalHack.service.DataSetFaceService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
@@ -20,7 +20,7 @@ class DataSetFaceController(
             @RequestParam("name") name: String,
             @RequestParam(required = false, value = "userData") userData: String?
     ): String {
-        return datasetFaceService.createPersonGroup(PersonGroup(name, userData ?: ""))
+        return datasetFaceService.createPersonGroup(PersonGroupDto(name, userData ?: ""))
     }
 
     @PostMapping("/createPersonInGroup")
@@ -29,7 +29,7 @@ class DataSetFaceController(
             @RequestParam("name") name: String,
             @RequestParam(required = false, value = "userData") userData: String?
     ): String {
-        return datasetFaceService.createPersonInGroup(groupId, Person(name, userData ?: ""))
+        return datasetFaceService.createPersonInGroup(groupId, PersonDto(name, userData ?: ""))
     }
 
     @PostMapping("/addFaceToPerson")
