@@ -2,6 +2,7 @@ package io.terra.yamalHack.service
 
 import io.terra.yamalHack.api.entity.DetectFaceApiResponse
 import io.terra.yamalHack.api.entity.IdentifyFaceApiResponse
+import io.terra.yamalHack.api.entity.numbOfMatchers
 import io.terra.yamalHack.cdn.GcsResolver
 import io.terra.yamalHack.cdn.GcsUploader
 import io.terra.yamalHack.model.ActionStats
@@ -43,8 +44,13 @@ class StatsRegistratorService(
 
     fun register(detections: List<DetectFaceApiResponse>, identifications: List<IdentifyFaceApiResponse>, file: MultipartFile) {
         logger.info("Start registration")
-        logger.info("Identificated faces: ${identifications.size}")
+        val matchers = identifications.numbOfMatchers()
+        logger.info("Identificated faces: ${matchers}")
 
+        if (matchers == 0) {
+            logger.info("Finish registration")
+            return
+        }
 
         registerFriendsStats(identifications)
 

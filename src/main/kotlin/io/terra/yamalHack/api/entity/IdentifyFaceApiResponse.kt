@@ -17,3 +17,7 @@ data class IdentifyCandidate(
         val personId: String,
         val confidence: Double
 )
+
+fun List<IdentifyFaceApiResponse>.numbOfMatchers(): Int {
+    return this.map { it.matcherCandidateId() }.filterNotNull().size
+}

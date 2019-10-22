@@ -9,7 +9,15 @@ data class Emotion (
         val neutral: Double,
         val sadness: Double,
         val surprise: Double
-)
+) {
+    companion object {
+        fun fuckYura(): Emotion {
+            return Emotion(
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+            )
+        }
+    }
+}
 
 fun List<Emotion>.average(): Emotion {
     val size = this.size

@@ -13,7 +13,15 @@ data class ChildStatsDto(
         val actionTimetable: List<Int>,
         val emotions: Emotion,
         val bestFriends: List<BestFriends>
-)
+) {
+    companion object {
+        fun fuckYura(): ChildStatsDto {
+            return ChildStatsDto(
+                    "", "","", 0L, 0, 0, 0, emptyList(), Emotion.fuckYura(), emptyList()
+            )
+        }
+    }
+}
 
 data class ActionTimetableItem(
         val iconUrl: String,
