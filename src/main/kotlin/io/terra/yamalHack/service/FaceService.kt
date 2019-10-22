@@ -4,7 +4,6 @@ import io.terra.yamalHack.api.FaceApi
 import io.terra.yamalHack.api.entity.DetectFaceApiResponse
 import io.terra.yamalHack.api.entity.IdentifyFaceApiResponse
 import io.terra.yamalHack.dto.IdentifyData
-import io.terra.yamalHack.model.Image
 import io.terra.yamalHack.util.CommandLineTool
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
