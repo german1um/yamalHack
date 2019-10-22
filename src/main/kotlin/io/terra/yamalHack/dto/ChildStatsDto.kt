@@ -10,7 +10,7 @@ data class ChildStatsDto(
         val energy: Int,
         val distance: Int,
         val rating: Int,
-        val actionTimetable: List<ActionTimetableItem>,
+        val actionTimetable: List<Int>,
         val emotions: Emotion,
         val bestFriends: List<BestFriends>
 )
@@ -26,3 +26,4 @@ data class BestFriends(
         val name: String,
         val timeTogether: Long
 )
+

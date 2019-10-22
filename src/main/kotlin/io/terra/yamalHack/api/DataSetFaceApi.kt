@@ -1,10 +1,9 @@
 package io.terra.yamalHack.api
 
-import io.terra.yamalHack.api.entity.IdentifyFaceApiResponse
-import io.terra.yamalHack.dto.IdentifyData
 import io.terra.yamalHack.model.Image
 import io.terra.yamalHack.dto.PersonDto
 import io.terra.yamalHack.dto.PersonGroupDto
+import okhttp3.OkHttpClient
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.PropertySource
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Component
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 @Component
 @PropertySource("classpath:token.properties")
@@ -26,14 +26,21 @@ class DataSetFaceApi(
     private var token: String = env.getProperty("secret-key") ?: ""
     private var baseUrl: String = env.getProperty("endpoint") ?: ""
 
-    private val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    private val retrofit: Retrofit
 
     private val api: DataSetFaceApiService
 
     init {
+        val okHttpClient = OkHttpClient().newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .build()
+
+        retrofit = Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
         api = retrofit.create(DataSetFaceApiService::class.java)
     }
 

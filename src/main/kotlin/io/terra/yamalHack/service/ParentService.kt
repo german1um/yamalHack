@@ -95,7 +95,7 @@ class ParentService(
                 energy = 100,
                 distance = 100,
                 rating = 100,
-                actionTimetable = emptyList(),
+                actionTimetable = listOf(2,3,1),
                 emotions = emotions,
                 bestFriends = emptyList()
         )

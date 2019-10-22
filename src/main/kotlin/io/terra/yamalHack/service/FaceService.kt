@@ -6,6 +6,7 @@ import io.terra.yamalHack.api.entity.IdentifyFaceApiResponse
 import io.terra.yamalHack.dto.IdentifyData
 import io.terra.yamalHack.service.ParentService.Companion.tmpGroupId
 import io.terra.yamalHack.util.CommandLineTool
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
@@ -26,6 +27,8 @@ class FaceService(
         @Autowired val contentService: ContentService,
         @Autowired val statsRegistratorService: StatsRegistratorService
 ) {
+
+    private val logger = LoggerFactory.getLogger(FaceService::class.java)
 
     fun isFacePresent(imagePath: String): Boolean {
         var result = commandLineTool.runTool(imagePath)
@@ -71,10 +74,16 @@ class FaceService(
     }
 
     fun processCameraPic(file: MultipartFile) {
+
+        logger.info("Start process camera pic")
         val faces = detectFace(file)
+        logger.info("Detect ${faces.size} faces")
+
+
         val faceIds = faces.map {
             it.faceId
         }
+
         if(faces.isNotEmpty()) {
             statsRegistratorService.register(
                     faces,
@@ -82,5 +91,7 @@ class FaceService(
                     file
             )
         }
+
+        logger.info("Finish process camera pic")
     }
 }

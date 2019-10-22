@@ -12,6 +12,7 @@ import io.terra.yamalHack.repository.ActionStatsRepository
 import io.terra.yamalHack.repository.ChildPhotosRepository
 import io.terra.yamalHack.repository.EmotionStatsRepository
 import io.terra.yamalHack.repository.FriendsStatsRepository
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
@@ -26,6 +27,7 @@ class StatsRegistratorService(
         @Autowired val gcsResolver: GcsResolver,
         @Autowired val gcsUploader: GcsUploader
 ) {
+    private val logger = LoggerFactory.getLogger(StatsRegistratorService::class.java)
 
     fun loadActionStats(childId: String): List<ActionStats> {
         return actionStatsRepository.findByChildId(childId)
@@ -40,6 +42,10 @@ class StatsRegistratorService(
     }
 
     fun register(detections: List<DetectFaceApiResponse>, identifications: List<IdentifyFaceApiResponse>, file: MultipartFile) {
+        logger.info("Start registration")
+        logger.info("Identificated faces: ${identifications.size}")
+
+
         registerFriendsStats(identifications)
 
         identifications.forEach { identify ->
@@ -48,6 +54,8 @@ class StatsRegistratorService(
         }
 
         registerPhoto(identifications, file)
+
+        logger.info("Finish registration")
     }
 
     private fun registerChild(detect: DetectFaceApiResponse, identify: IdentifyFaceApiResponse) {
@@ -56,6 +64,7 @@ class StatsRegistratorService(
     }
 
     private fun registerFriendsStats(identifications: List<IdentifyFaceApiResponse>) {
+        logger.info("Start register best friends")
         friendsStatsRepository.save(
                 FriendsStats(
                         System.currentTimeMillis(),
@@ -66,6 +75,7 @@ class StatsRegistratorService(
                         }
                 )
         )
+        logger.info("Finish register best friends")
     }
 
     private fun registerEmotionStats(detect: DetectFaceApiResponse) {
@@ -93,9 +103,12 @@ class StatsRegistratorService(
     }
 
     private fun registerPhoto(identifications: List<IdentifyFaceApiResponse>, file: MultipartFile) {
+        logger.info("Start register photo")
         val links = gcsResolver.generateContentLinks(UUID.randomUUID().toString())
 
         gcsUploader.loadImageToGcs(links.uploadLink, file)
+
+        logger.info("Image download link: ${links.downloadLink}")
 
         childPhotosRepository.save(
                 ChildPhotos(
@@ -103,5 +116,7 @@ class StatsRegistratorService(
                         identifications.mapNotNull { it.matcherCandidateId() }
                 )
         )
+        logger.info("Finish register photo")
+
     }
 }
