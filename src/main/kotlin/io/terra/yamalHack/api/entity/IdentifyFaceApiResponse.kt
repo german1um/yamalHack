@@ -19,5 +19,8 @@ data class IdentifyCandidate(
 )
 
 fun List<IdentifyFaceApiResponse>.numbOfMatchers(): Int {
+    this.forEach {
+        it.candidates.forEach { println(it.confidence) }
+    }
     return this.map { it.matcherCandidateId() }.filterNotNull().size
 }

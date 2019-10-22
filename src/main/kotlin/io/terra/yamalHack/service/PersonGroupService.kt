@@ -35,8 +35,6 @@ class PersonGroupService(
                         persons = newGroup.persons
                 )
         )
-
-        setTrainedStatus(groupId, false)
     }
 
     fun addPersonToGroup(groupId: String, person: Person) {

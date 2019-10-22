@@ -60,10 +60,6 @@ class DataSetFaceService (
 
         trainPersonGroup(groupId)
 
-        while (trainingStatus(groupId) != "succeeded") {
-
-        }
-
         return faceId
     }
 

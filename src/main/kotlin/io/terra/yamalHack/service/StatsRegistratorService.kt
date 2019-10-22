@@ -43,6 +43,7 @@ class StatsRegistratorService(
     }
 
     fun register(detections: List<DetectFaceApiResponse>, identifications: List<IdentifyFaceApiResponse>, file: MultipartFile) {
+        //matchers == 0 => save
         logger.info("Start registration")
         val matchers = identifications.numbOfMatchers()
         logger.info("Identificated faces: ${matchers}")

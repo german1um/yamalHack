@@ -47,7 +47,7 @@ class ParentService(
 
     fun addChild(token: String, childName: String): Parent {
         val parent = parentRepository.findByToken(token).get()
-        val childId = dataSetFaceService.addPersonToGroup(tmpGroupId, PersonDto(childName))
+        val childId = dataSetFaceService.addPersonToGroup(GroupData.tmpGroupId, PersonDto(childName))
 
         parentRepository.save(
                 Parent(
@@ -66,7 +66,7 @@ class ParentService(
         parent.children.firstOrNull { it.id == childId } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Child not found!")
 
         photoUrls.forEach { url ->
-            dataSetFaceService.addFaceToPerson(tmpGroupId, childId, url)
+            dataSetFaceService.addFaceToPerson(GroupData.tmpGroupId, childId, url)
         }
 
         return "OK"
@@ -81,7 +81,7 @@ class ParentService(
     }
 
     fun childStats(token: String, childId: String): ChildStatsDto {
-        val child = personGroupService.loadOrThrow(tmpGroupId).persons.firstOrNull { it.id == childId } ?: return ChildStatsDto.fuckYura()
+        val child = personGroupService.loadOrThrow(GroupData.tmpGroupId).persons.firstOrNull { it.id == childId } ?: return ChildStatsDto.fuckYura()
 
         val emotions = statsRegistratorService.loadEmotionsForChild(child.id)
                 .map { it.emotions }
@@ -112,7 +112,7 @@ class ParentService(
         val links = gcsResolver.generateContentLinks(UUID.randomUUID().toString())
         gcsUploader.loadImageToGcs(links.uploadLink, file)
 
-        dataSetFaceService.addFaceToPerson(tmpGroupId, childId, links.downloadLink)
+        dataSetFaceService.addFaceToPerson(GroupData.tmpGroupId, childId, links.downloadLink)
 
         incrementChildPhotoCount(token, childId)
 
@@ -139,12 +139,7 @@ class ParentService(
     }
 
     private fun loadChildProfilePhoto(childId: String): String {
-        return personGroupService.loadOrThrow(tmpGroupId).persons.first { it.id == childId }.persistedFaces.first().url
-    }
-
-    companion object {
-        //const val tmpGroupId = "58fe9b26-7a45-48cc-9631-c5ab4a494b22"
-        const val tmpGroupId = "a7e0a56a-e94f-4c4a-87ba-cf89f6fb60f1"
+        return personGroupService.loadOrThrow(GroupData.tmpGroupId).persons.first { it.id == childId }.persistedFaces.first().url
     }
 }
 

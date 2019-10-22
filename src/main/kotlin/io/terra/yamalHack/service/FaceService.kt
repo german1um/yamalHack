@@ -4,7 +4,6 @@ import io.terra.yamalHack.api.FaceApi
 import io.terra.yamalHack.api.entity.DetectFaceApiResponse
 import io.terra.yamalHack.api.entity.IdentifyFaceApiResponse
 import io.terra.yamalHack.dto.IdentifyData
-import io.terra.yamalHack.service.ParentService.Companion.tmpGroupId
 import io.terra.yamalHack.util.CommandLineTool
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -87,11 +86,16 @@ class FaceService(
         if(faces.isNotEmpty()) {
             statsRegistratorService.register(
                     faces,
-                    identify(faceIds, tmpGroupId),
+                    identify(faceIds, GroupData.tmpGroupId),
                     file
             )
         }
 
         logger.info("Finish process camera pic")
     }
+}
+
+
+object GroupData {
+    val tmpGroupId = "a7e0a56a-e94f-4c4a-87ba-cf89f6fb60f1"
 }
