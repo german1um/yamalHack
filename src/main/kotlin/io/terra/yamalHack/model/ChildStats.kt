@@ -24,3 +24,9 @@ data class ActionStats(
         val x: Int,
         val y: Int
 )
+
+@Document
+data class ChildPhotos(
+        val url: String,
+        val childIds: List<String>
+)

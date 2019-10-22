@@ -76,8 +76,10 @@ class FaceService(
             it.faceId
         }
         if(faces.isNotEmpty()) {
-            statsRegistratorService.register(faces,
-                    identify(faceIds, tmpGroupId)
+            statsRegistratorService.register(
+                    faces,
+                    identify(faceIds, tmpGroupId),
+                    file
             )
         }
     }
