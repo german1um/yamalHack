@@ -20,13 +20,13 @@ class DataSetFaceController(
         return dataSetFaceService.createPersonGroup(PersonGroupDto(name, userData ?: ""))
     }
 
-    @PostMapping("/createPersonInGroup")
-    fun createPersonInGroup(
+    @PostMapping("/addPersonToGroup")
+    fun addPersonToGroup(
             @RequestParam("groupId") groupId: String,
             @RequestParam("name") name: String,
             @RequestParam(required = false, value = "userData") userData: String?
     ): String {
-        return dataSetFaceService.createPersonInGroup(groupId, PersonDto(name, userData ?: ""))
+        return dataSetFaceService.addPersonToGroup(groupId, PersonDto(name, userData ?: ""))
     }
 
     @PostMapping("/addFaceToPerson")

@@ -7,7 +7,9 @@ import io.terra.yamalHack.dto.IdentifyData
 import io.terra.yamalHack.model.Image
 import io.terra.yamalHack.util.CommandLineTool
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
+import org.springframework.web.server.ResponseStatusException
 
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
@@ -18,6 +20,8 @@ import java.util.*
 
 @Component
 class FaceService(
+        @Autowired val faceApi: FaceApi,
+        @Autowired val personGroupService: PersonGroupService,
         @Autowired val faceApi: FaceApi,
         @Autowired val commandLineTool: CommandLineTool,
         @Autowired val contentService: ContentService
@@ -59,6 +63,10 @@ class FaceService(
     }
 
     fun identify(faceId: String, personGroupId: String): List<IdentifyFaceApiResponse> {
+        val group = personGroupService.loadOrThrow(personGroupId)
+
+        if (!group.isTrained) throw ResponseStatusException(HttpStatus.NOT_FOUND, "Person Group is not trained yet!")
+
         return faceApi.identify(IdentifyData(personGroupId, listOf(faceId)))
     }
 }

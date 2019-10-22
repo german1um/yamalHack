@@ -9,4 +9,4 @@ data class Emotion (
         val neutral: Double,
         val sadness: Double,
         val surprise: Double
-        )
+)
