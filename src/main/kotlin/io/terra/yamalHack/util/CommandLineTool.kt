@@ -15,7 +15,7 @@ class CommandLineTool {
         try {
 
             // Run command
-            val command = arrayOf("python", "src/main/resources/scripts/face_detect.py", argument)
+            val command = arrayOf("python", "scripts/face_detect.py", argument)
             val cwlToolProcess = ProcessBuilder(*command)
             val process = cwlToolProcess.start()
 
