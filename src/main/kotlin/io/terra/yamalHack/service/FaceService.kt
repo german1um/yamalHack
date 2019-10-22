@@ -75,8 +75,10 @@ class FaceService(
         val faceIds = faces.map {
             it.faceId
         }
-        statsRegistratorService.register(faces,
-                identify(faceIds, tmpGroupId)
-        )
+        if(faces.isNotEmpty()) {
+            statsRegistratorService.register(faces,
+                    identify(faceIds, tmpGroupId)
+            )
+        }
     }
 }
