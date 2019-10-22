@@ -22,7 +22,6 @@ import java.util.*
 class FaceService(
         @Autowired val faceApi: FaceApi,
         @Autowired val personGroupService: PersonGroupService,
-        @Autowired val faceApi: FaceApi,
         @Autowired val commandLineTool: CommandLineTool,
         @Autowired val contentService: ContentService
 ) {
