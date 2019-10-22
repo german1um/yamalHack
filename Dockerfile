@@ -7,7 +7,7 @@ RUN gradle bootJar
 FROM java:8
 
 RUN apt update || true
-RUN apt install -y opencv-python
+RUN apt install -y python-opencv
 
 COPY --from=stage /build/build/libs/build-0.0.1-SNAPSHOT.jar /app/init.jar
 WORKDIR /app
