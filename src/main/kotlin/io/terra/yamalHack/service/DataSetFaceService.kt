@@ -1,7 +1,7 @@
 package io.terra.yamalHack.service
 
 import io.terra.yamalHack.api.DataSetFaceApi
-import io.terra.yamalHack.api.entity.IdentifyResponse
+import io.terra.yamalHack.api.entity.IdentifyFaceApiResponse
 import io.terra.yamalHack.dto.IdentifyData
 import io.terra.yamalHack.model.Image
 import io.terra.yamalHack.dto.PersonDto
@@ -32,9 +32,5 @@ class DataSetFaceService (
 
     fun trainingStatus(groupId: String): String {
         return dataSetFaceApi.trainingStatus(groupId)
-    }
-
-    fun identify(faceId: String, personGroupId: String): List<IdentifyResponse> {
-        return dataSetFaceApi.identify(IdentifyData(personGroupId, listOf(faceId)))
     }
 }

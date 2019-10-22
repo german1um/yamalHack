@@ -1,6 +1,8 @@
 package io.terra.yamalHack.api
 
 import io.terra.yamalHack.api.entity.DetectFaceApiResponse
+import io.terra.yamalHack.api.entity.IdentifyFaceApiResponse
+import io.terra.yamalHack.dto.IdentifyData
 import io.terra.yamalHack.model.Image
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -46,4 +48,12 @@ class FaceApi (
         return response.body()!!
     }
 
+    fun identify(data: IdentifyData): List<IdentifyFaceApiResponse> {
+        val response = api.identify(
+                subscriptionKey = token,
+                identifyData = data
+        ).execute()
+
+        return response.body()!!
+    }
 }

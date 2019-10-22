@@ -1,6 +1,5 @@
 package io.terra.yamalHack.controller
 
-import io.terra.yamalHack.api.entity.IdentifyResponse
 import io.terra.yamalHack.dto.PersonDto
 import io.terra.yamalHack.dto.PersonGroupDto
 import io.terra.yamalHack.service.DataSetFaceService
@@ -51,13 +50,5 @@ class DataSetFaceController(
             @RequestParam("groupId") groupId: String
     ): String{
         return dataSetFaceService.trainingStatus(groupId)
-    }
-
-    @PostMapping("/identify")
-    fun identify(
-            @RequestParam("faceId") faceId: String,
-            @RequestParam("groupId") groupId: String
-    ): List<IdentifyResponse> {
-        return dataSetFaceService.identify(faceId, groupId)
     }
 }

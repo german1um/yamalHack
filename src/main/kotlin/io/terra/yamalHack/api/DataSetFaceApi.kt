@@ -1,6 +1,6 @@
 package io.terra.yamalHack.api
 
-import io.terra.yamalHack.api.entity.IdentifyResponse
+import io.terra.yamalHack.api.entity.IdentifyFaceApiResponse
 import io.terra.yamalHack.dto.IdentifyData
 import io.terra.yamalHack.model.Image
 import io.terra.yamalHack.dto.PersonDto
@@ -86,14 +86,5 @@ class DataSetFaceApi(
         ).execute()
 
         return response.body()?.status ?: "FAIL"
-    }
-
-    fun identify(data: IdentifyData): List<IdentifyResponse> {
-        val response = api.identify(
-                subscriptionKey = token,
-                identifyData = data
-        ).execute()
-
-        return response.body()!!
     }
 }

@@ -1,12 +1,10 @@
 package io.terra.yamalHack.controller
 
 import io.terra.yamalHack.api.entity.DetectFaceApiResponse
+import io.terra.yamalHack.api.entity.IdentifyFaceApiResponse
 import io.terra.yamalHack.service.FaceService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/face")
@@ -20,5 +18,13 @@ class FaceController (
             picture: String
     ): List<DetectFaceApiResponse> {
         return faceService.detectFace(picture)
+    }
+
+    @PostMapping("/identify")
+    fun identify(
+            @RequestParam("faceId") faceId: String,
+            @RequestParam("groupId") groupId: String
+    ): List<IdentifyFaceApiResponse> {
+        return faceService.identify(faceId, groupId)
     }
 }

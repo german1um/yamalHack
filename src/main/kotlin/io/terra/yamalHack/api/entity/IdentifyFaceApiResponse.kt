@@ -1,6 +1,6 @@
 package io.terra.yamalHack.api.entity
 
-data class IdentifyResponse(
+data class IdentifyFaceApiResponse(
         val faceId: String,
         val candidates: List<IdentifyCandidate>
 )
