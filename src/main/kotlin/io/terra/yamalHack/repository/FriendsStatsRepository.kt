@@ -5,4 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository
 
 
 interface FriendsStatsRepository : MongoRepository<FriendsStats, String> {
+
 }
