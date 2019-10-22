@@ -15,8 +15,6 @@ class ParentService(
         @Autowired val dataSetFaceService: DataSetFaceService
 ) {
 
-    private val tmpGroupId = "58fe9b26-7a45-48cc-9631-c5ab4a494b22"
-
     fun login(token: String): Parent {
         return if (isExist(token)) {
             parentRepository.findByToken(token).get()
@@ -64,5 +62,9 @@ class ParentService(
 
     fun childStats(token: String, childId: String): ChildStatsDto {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    companion object {
+        const val tmpGroupId = "58fe9b26-7a45-48cc-9631-c5ab4a494b22"
     }
 }

@@ -14,27 +14,11 @@ class FaceController (
         @Autowired val faceService: FaceService
 ){
 
-    @PostMapping("/detect")
-    fun detect(
-            @RequestParam("imageUrl")
+    @PostMapping("/cameraPic")
+    fun cameraPic(
+            @RequestParam("pic")
             file: MultipartFile
-    ): List<DetectFaceApiResponse> {
-        return faceService.detectFace(file)
-    }
-
-    @PostMapping("/identify")
-    fun identify(
-            @RequestParam("faceId") faceId: String,
-            @RequestParam("groupId") groupId: String
-    ): List<IdentifyFaceApiResponse> {
-        return faceService.identify(faceId, groupId)
-    }
-
-    @PostMapping("/uploadImage")
-    fun uploadImage(@RequestParam("file") file: MultipartFile): String {
-
-        return """
-           Pic - ${faceService.isFacePresent(file)}
-        """.trimIndent()
+    ) {
+        faceService.processCameraPic(file)
     }
 }
