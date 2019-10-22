@@ -85,11 +85,11 @@ class ParentService(
         val emotions = statsRegistratorService.loadEmotionsForChild(child.id)
                 .map { it.emotions }
                 .average()
-        //val friendsStats = statsRegistratorService.loadFriendsStats().map { it.children.contains(childId) }
+        val friendsStats = statsRegistratorService.loadFriendsStats().map { it.children.contains(childId) }
         /*val actionStats = statsRegistratorService.loadActionStats(childId)*/
 
         return ChildStatsDto(
-                "",
+                loadChildProfilePhoto(child.id),
                 child.name,
                 "Первый отряд",
                 actionDuration = 60*62*1332,
@@ -134,6 +134,10 @@ class ParentService(
                 )
         )
 
+    }
+
+    private fun loadChildProfilePhoto(childId: String): String {
+        return personGroupService.loadOrThrow(tmpGroupId).persons.first { it.id == childId }.persistedFaces.first().url
     }
 
     companion object {
