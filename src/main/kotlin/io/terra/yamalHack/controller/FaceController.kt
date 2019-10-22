@@ -30,15 +30,6 @@ class FaceController (
         return faceService.identify(faceId, groupId)
     }
 
-    @GetMapping("/test")
-    fun test(): String {
-        return """
-           Pic 1 - ${faceService.isFacePresent("/home/gera/IdeaProjects/yamalHack/src/main/resources/images/image.jpg").toString()}
-            Pic 2 - ${faceService.isFacePresent("/home/gera/IdeaProjects/yamalHack/src/main/resources/images/image2.jpg").toString()}
-            Pic 3 - ${faceService.isFacePresent("/home/gera/IdeaProjects/yamalHack/src/main/resources/images/image3.jpg").toString()}
-        """.trimIndent()
-    }
-
     @PostMapping("/uploadImage")
     fun uploadImage(@RequestParam("file") file: MultipartFile): String {
 
