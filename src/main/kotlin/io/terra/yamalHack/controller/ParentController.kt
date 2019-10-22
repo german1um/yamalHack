@@ -6,6 +6,7 @@ import io.terra.yamalHack.model.Person
 import io.terra.yamalHack.service.ParentService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/parent")
@@ -28,8 +29,18 @@ class ParentController(
         return parentService.addChild(token, childName)
     }
 
-    @PostMapping("/{parentToken}/addChildrenPhotos")
-    fun addChildrenPhotos(
+    @PostMapping("/{parentToken}/{childId}/addChildPhoto")
+    fun addChildPhoto(
+            @PathVariable("parentToken") token: String,
+            @PathVariable("childId") childId: String,
+            @RequestParam("pic")
+            file: MultipartFile
+    ): String {
+        return parentService.addChildPhoto(token, childId, file)
+    }
+
+    @PostMapping("/{parentToken}/addChildPhotos")
+    fun addChildPhotos(
             @PathVariable("parentToken") token: String,
             @RequestParam("childId") childId: String,
             @RequestParam("photoUrls") photoUrls: List<String>
