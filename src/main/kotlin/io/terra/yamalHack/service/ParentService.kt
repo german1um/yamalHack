@@ -174,7 +174,7 @@ class ParentService(
 
         if (tmp.size <= 3) return tmp
 
-        return tmp.subList(0, 2)
+        return tmp.subList(0, 3)
     }
 }
 
