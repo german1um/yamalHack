@@ -28,6 +28,8 @@ class DataSetFaceService (
                 )
         )
 
+        trainPersonGroup(groupId)
+
         return groupId
     }
 
@@ -42,6 +44,8 @@ class DataSetFaceService (
                         userData = personDto.userData
                 )
         )
+
+        trainPersonGroup(groupId)
 
         return personId
     }
