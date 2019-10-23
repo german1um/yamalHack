@@ -100,5 +100,5 @@ class FaceService(
 
 
 object GroupData {
-    val tmpGroupId = "a7e0a56a-e94f-4c4a-87ba-cf89f6fb60f1"
+    val tmpGroupId = "890dcbaf-08d4-4b64-93b3-2156243f09f5"
 }
