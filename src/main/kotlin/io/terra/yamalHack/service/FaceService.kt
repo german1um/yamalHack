@@ -54,9 +54,12 @@ class FaceService(
 
         val imagePath = saveImage(file)
         val isFace = isFacePresent(imagePath)
+        logger.info("OpenCV detected - $isFace")
         val result: List<DetectFaceApiResponse>
         result = if (isFace) {
-            faceApi.detectFace(file)
+            val azureDetect = faceApi.detectFace(file)
+            logger.info("Azure detected - ${azureDetect.size}")
+            azureDetect
         } else {
             emptyList()
         }
