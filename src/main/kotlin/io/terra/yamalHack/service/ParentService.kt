@@ -87,7 +87,7 @@ class ParentService(
                 .map { it.emotions }
                 .average()
 
-        val friends = listOf(BestFriends.getTestFriends(100), BestFriends.getTestFriends(43), BestFriends.getTestFriends(766))
+        val friends = loadFriends(childId)//listOf(BestFriends.getTestFriends(100), BestFriends.getTestFriends(43), BestFriends.getTestFriends(766))
         /*val actionStats = statsRegistratorService.loadActionStats(childId)*/
 
         return ChildStatsDto(
@@ -140,6 +140,29 @@ class ParentService(
 
     private fun loadChildProfilePhoto(childId: String): String {
         return personGroupService.loadOrThrow(GroupData.tmpGroupId).persons.first { it.id == childId }.persistedFaces.first().url
+    }
+
+    private fun loadChildName(childId: String): String {
+        return personGroupService.loadOrThrow(GroupData.tmpGroupId).persons.first { it.id == childId }.name
+    }
+
+    private fun loadFriends(childId: String): List<BestFriends> {
+        return statsRegistratorService.loadFriendsStats()
+                .filter { it.children.contains(childId) }
+                .filter { it.children.size > 1 }
+                .flatMap { friend ->
+                    val tmp = friend.children.toMutableList()
+                    tmp.removeIf { it == childId }
+                    tmp
+                }
+                .groupBy { it }
+                .map { it.key to it.value.size }
+                .sortedBy { it.second }
+                .map { BestFriends(
+                        loadChildProfilePhoto(it.first),
+                        loadChildName(it.first),
+                        it.second.toLong()
+                ) }
     }
 }
 
