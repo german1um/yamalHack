@@ -27,6 +27,7 @@ data class ActionStats(
 
 @Document
 data class ChildPhotos(
+        val timestamp: Long,
         val url: String,
         val childIds: List<String>
 )

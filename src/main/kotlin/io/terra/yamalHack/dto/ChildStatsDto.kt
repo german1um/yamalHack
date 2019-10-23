@@ -12,12 +12,13 @@ data class ChildStatsDto(
         val rating: Int,
         val actionTimetable: List<Int>,
         val emotions: Emotion,
-        val bestFriends: List<BestFriends>
+        val bestFriends: List<BestFriends>,
+        val lastPhotos: List<String>
 ) {
     companion object {
         fun fuckYura(): ChildStatsDto {
             return ChildStatsDto(
-                    "", "","", 0L, 0, 0, 0, emptyList(), Emotion.fuckYura(), emptyList()
+                    "", "","", 0L, 0, 0, 0, emptyList(), Emotion.fuckYura(), emptyList(), emptyList()
             )
         }
     }

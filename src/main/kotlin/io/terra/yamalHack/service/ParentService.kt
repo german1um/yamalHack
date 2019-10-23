@@ -100,7 +100,8 @@ class ParentService(
                 rating = 100,
                 actionTimetable = listOf(2,3,1),
                 emotions = emotions,
-                bestFriends = friends
+                bestFriends = friends,
+                lastPhotos = loadLastPhotos(childId)
         )
     }
 
@@ -157,12 +158,23 @@ class ParentService(
                 }
                 .groupBy { it }
                 .map { it.key to it.value.size }
-                .sortedBy { it.second }
+                .sortedByDescending { it.second }
                 .map { BestFriends(
                         loadChildProfilePhoto(it.first),
                         loadChildName(it.first),
                         it.second.toLong()
                 ) }
+    }
+
+    private fun loadLastPhotos(childId: String): List<String> {
+        val tmp = statsRegistratorService.loadChildPhotos()
+                .filter { it.childIds.contains(childId) }
+                .sortedByDescending { it.timestamp }
+                .map { it.url }
+
+        if (tmp.size <= 3) return tmp
+
+        return tmp.subList(0, 2)
     }
 }
 

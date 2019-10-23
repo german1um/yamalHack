@@ -30,6 +30,10 @@ class StatsRegistratorService(
 ) {
     private val logger = LoggerFactory.getLogger(StatsRegistratorService::class.java)
 
+    fun loadChildPhotos(): List<ChildPhotos> {
+        return childPhotosRepository.findAll()
+    }
+
     fun loadActionStats(childId: String): List<ActionStats> {
         return actionStatsRepository.findByChildId(childId)
     }
@@ -119,7 +123,8 @@ class StatsRegistratorService(
 
         childPhotosRepository.save(
                 ChildPhotos(
-                       links.downloadLink,
+                        System.currentTimeMillis(),
+                        links.downloadLink,
                         identifications.mapNotNull { it.matcherCandidateId() }
                 )
         )
