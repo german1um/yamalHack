@@ -68,11 +68,12 @@ class FaceApi (
     }
 
     fun identify(data: IdentifyData): List<IdentifyFaceApiResponse> {
+        logger.info("Making a call to azure identify")
         val response = api.identify(
                 subscriptionKey = token,
                 identifyData = data
         ).execute()
-
+        logger.info("Making a call to azure identify - DONE")
         if(response.body() == null) {
             logger.info(response.message())
         }

@@ -69,7 +69,7 @@ class FaceService(
 
     fun identify(faceIds: List<String>, personGroupId: String): List<IdentifyFaceApiResponse> {
         val group = personGroupService.loadOrThrow(personGroupId)
-
+        logger.info("Enter indentify method")
         if (!group.isTrained) throw ResponseStatusException(HttpStatus.NOT_FOUND, "Person Group is not trained yet!")
 
         return faceApi.identify(IdentifyData(personGroupId, faceIds))
